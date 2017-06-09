@@ -1,0 +1,37 @@
+{% load staticfiles %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="ru">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Фотогалерея</title>
+        <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.js"></script>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <script src="{% static 'js/main.js' %}"></script>
+    </head>
+
+    <body id="second-page-body" onload="resizeComments()" hidden>
+        <a id="to-main-page" href="{% url 'index-page' %}">На главную</a>
+        <nav class="navbar navbar-inverse navbar-fixed-top compensate-for-scrollbar">
+            <div id="images-and-comments">
+                {% for im in images %}
+                    <div class="image-and-comment">
+                        <a class="link-on-full-image" data-fancybox="gallery" href="{{ im.image.url }}">
+                            <img class="thumbnail" alt=""
+                                 src="{% thumbnail im.image "x200" format='PNG' upscale=False padding=False padding_color='#b4b4b4' %}">
+                        </a>
+                        <div class="comment">
+                            {{ im.comment }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </nav>
+    </body>
+
+</html>

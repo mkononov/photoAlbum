@@ -1,0 +1,42 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="ru">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Загрузить изображение</title>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src= {% static 'js/autosize.min.js' %}></script>
+    </head>
+
+    <body id="first-page-body" onload="clearFields()">
+        <div id="wrapper">
+            <div id="logo-div">
+                <a href="{% url 'index-page' %}">
+                    <img id="logo" src="{% static 'images/logo.png' %}" alt="Логотип">
+                </a>
+            </div>
+            <div id="form-div">
+                <form id="form" action="{% url 'upload-image' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input id="file" type="file" name="image" accept="image/*" onchange="checkFileType(this.value)"
+                           required>
+                    <input id="fake-input" type="text" autocomplete="off" placeholder="Выберите файл" readonly required>
+                    <button id="fake-input-button" onclick="callInputFile()">Файл</button>
+                    <textarea id="add-comment" name="comment" form="form" rows="1" maxlength="200"
+                              placeholder="Комментарий (макс. 200 символов)" spellcheck="false" required></textarea>
+                    <a id="show-photogallery" href="{% url 'show-images' %}">Фотогалерея</a>
+                    <input id="submit" type="submit" value="Загрузить">
+                </form>
+            </div>
+        </div>
+        {% comment %} Автоматическое увеличение высоты textarea при вводе {% endcomment %}
+        <script>
+            autosize(document.querySelector('textarea'));
+        </script>
+    </body>
+
+</html>
